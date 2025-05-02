@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from email_sender import send_email_with_attachment
 
 header = ["VesselName", "time", "LAT", "LON"]
+secondsToWait = 1800
 def getHtmlFromUrl(url):
     request = requests.get(url).text
     return request
@@ -39,19 +40,19 @@ def writeInformationToFiles(names, stop_event):
             LON = str(coords[1])
             if objName in names:
                 row = [objName, t, LAT, LON]
-                print(row)
                 writeToFile(objName, row)
         counter += 5
         time.sleep(5)
-        if(counter % 1800 == 0):
+        if(counter % secondsToWait == 0):
             counter = 0
             attachmentPaths = [f"{id}.csv" for id in names]
             send_email_with_attachment("vesseltracker1@gmail.com", str(names), "vessel tracking", attachmentPaths)
 
 def writeToFile(id, row):
+    print(id)
     path = f"{id}.csv"
+    path_existed = os.path.exists(path)
     with open(path, "a") as file:
-        path_existed = os.path.exists(path)
         csv_reader = reader.writer(file)
         if not path_existed:
             csv_reader.writerow(header)
