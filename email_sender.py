@@ -24,3 +24,7 @@ def send_email_with_attachment(to_email, subject, body, attachment_paths):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
         smtp.login(email, st.secrets['email']['password'])
         smtp.send_message(msg)
+
+def send_email(names):
+    attachmentPaths = [f"{id}.csv" for id in names]
+    send_email_with_attachment("vesseltracker1@gmail.com", str(names), "vessel tracking", attachmentPaths)

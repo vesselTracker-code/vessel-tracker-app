@@ -6,7 +6,7 @@ import time
 import streamlit as st
 from bs4 import BeautifulSoup
 
-from email_sender import send_email_with_attachment
+from email_sender import send_email_with_attachment, send_email
 
 header = ["VesselName", "time", "LAT", "LON"]
 secondsToWait = 1800
@@ -45,8 +45,10 @@ def writeInformationToFiles(names, stop_event):
         time.sleep(5)
         if(counter % secondsToWait == 0):
             counter = 0
-            attachmentPaths = [f"{id}.csv" for id in names]
-            send_email_with_attachment("vesseltracker1@gmail.com", str(names), "vessel tracking", attachmentPaths)
+            send_email(names)
+
+    #if we stop scraping send one last email before leaving
+    send_email(names)
 
 def writeToFile(id, row):
     print(id)
