@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 from email_sender import send_email_with_attachment, send_email
 
-header = ["VesselName", "time", "LAT", "LON"]
+header = ["VesselName", "time", "LAT", "LON", "Wind Direction", "Wind Speed"]
 secondsToWait = 1800
 def getHtmlFromUrl(url):
     request = requests.get(url).text
@@ -35,11 +35,23 @@ def writeInformationToFiles(names, stop_event):
             objName = properties["name"]
             t = str(properties["time"])
 
+            windDir = properties["wind_dir"]
+            try:
+                windDir = int(windDir)
+            except:
+                pass
+
+            windSpeed = properties["wind_speed"]
+            try:
+                windSpeed = round(float(windSpeed), 1)
+            except:
+                pass
+
             coords = geometry["coordinates"]
             LAT = str(coords[0])
             LON = str(coords[1])
             if objName in names:
-                row = [objName, t, LAT, LON]
+                row = [objName, t, LAT, LON, windDir, windSpeed]
                 writeToFile(objName, row)
         counter += 5
         time.sleep(5)

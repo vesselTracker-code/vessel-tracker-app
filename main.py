@@ -41,3 +41,4 @@ if not st.session_state.running:
 if st.session_state.running:
     st.button("🛑 Stop scraping", on_click=stop_running)
 
+
