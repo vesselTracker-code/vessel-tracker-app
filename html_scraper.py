@@ -18,7 +18,7 @@ def getJsonFromHtml(htmlText):
     return json.loads(htmlText)
 
 def getVesselsArrayFromHtml():
-    url = "https://control.effettoventuri.eu/bz/marks?coursecode=Chris"
+    url = "https://control.effettoventuri.eu/bz/marks?coursecode=Versari"
     htmlText = getHtmlFromUrl(url)
     if htmlText is not None:
         jsonFromHtml = getJsonFromHtml(htmlText)
