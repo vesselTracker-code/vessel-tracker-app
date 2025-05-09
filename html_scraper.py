@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from email_sender import send_email_with_attachment, send_email
 
 header = ["VesselName", "time", "LAT", "LON", "Wind Direction", "Wind Speed"]
-secondsToWait = 1800
+secondsToWait = 900
 def getHtmlFromUrl(url):
     request = requests.get(url).text
     return request
